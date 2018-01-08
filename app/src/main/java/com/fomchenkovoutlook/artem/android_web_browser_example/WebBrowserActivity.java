@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.fomchenkovoutlook.artem.android_web_browser_example.client.WebBrowserViewClient;
+import com.fomchenkovoutlook.artem.android_web_browser_example.view.WebBrowserView;
 
 import static com.fomchenkovoutlook.artem.android_web_browser_example.constants
         .ConstantsInterface.ProtocolsInterface.*;
@@ -21,7 +21,7 @@ public class WebBrowserActivity
 
     private EditText etWebSite;
 
-    private WebView wvWebSite;
+    private WebBrowserView wvWebBrowserView;
 
     private class WebViewSwipeListener
         implements View.OnTouchListener {
@@ -70,7 +70,7 @@ public class WebBrowserActivity
             address = HTTPS_PROTOCOL + address;
         }
 
-        wvWebSite.loadUrl(address);
+        wvWebBrowserView.loadUrl(address);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -89,21 +89,21 @@ public class WebBrowserActivity
             }
         });
 
-        wvWebSite = findViewById(R.id.wv_web_site);
-        wvWebSite.setWebViewClient(new WebBrowserViewClient(etWebSite));
-        wvWebSite.getSettings().setJavaScriptEnabled(true);
-        wvWebSite.setVerticalScrollBarEnabled(true);
-        wvWebSite.setHorizontalScrollBarEnabled(true);
-        wvWebSite.setOnTouchListener(new WebViewSwipeListener(this) {
+        wvWebBrowserView = findViewById(R.id.wv_web_site);
+        wvWebBrowserView.setWebViewClient(new WebBrowserViewClient(etWebSite));
+        wvWebBrowserView.getSettings().setJavaScriptEnabled(true);
+        wvWebBrowserView.setVerticalScrollBarEnabled(true);
+        wvWebBrowserView.setHorizontalScrollBarEnabled(true);
+        wvWebBrowserView.setOnTouchListener(new WebViewSwipeListener(this) {
 
             @Override
             void onSwipeRight() {
                 super.onSwipeRight();
 
-                if (wvWebSite.canGoBack()) {
-                    wvWebSite.goBack();
+                if (wvWebBrowserView.canGoBack()) {
+                    wvWebBrowserView.goBack();
 
-                    etWebSite.setText(wvWebSite.getUrl());
+                    etWebSite.setText(wvWebBrowserView.getUrl());
                 }
             }
 
@@ -111,10 +111,10 @@ public class WebBrowserActivity
             void onSwipeLeft() {
                 super.onSwipeLeft();
 
-                if (wvWebSite.canGoForward()) {
-                    wvWebSite.goForward();
+                if (wvWebBrowserView.canGoForward()) {
+                    wvWebBrowserView.goForward();
 
-                    etWebSite.setText(wvWebSite.getUrl());
+                    etWebSite.setText(wvWebBrowserView.getUrl());
                 }
             }
         });
