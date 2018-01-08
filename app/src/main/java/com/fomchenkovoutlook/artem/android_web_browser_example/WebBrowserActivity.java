@@ -92,14 +92,12 @@ public class WebBrowserActivity
         wvWebBrowserView = findViewById(R.id.wv_web_site);
         wvWebBrowserView.setWebViewClient(new WebBrowserViewClient(etWebSite));
         wvWebBrowserView.getSettings().setJavaScriptEnabled(true);
-        wvWebBrowserView.setVerticalScrollBarEnabled(true);
-        wvWebBrowserView.setHorizontalScrollBarEnabled(true);
+        wvWebBrowserView.setVerticalScrollBarEnabled(false);
+        wvWebBrowserView.setHorizontalScrollBarEnabled(false);
         wvWebBrowserView.setOnTouchListener(new WebViewSwipeListener(this) {
 
             @Override
             void onSwipeRight() {
-                super.onSwipeRight();
-
                 if (wvWebBrowserView.canGoBack()) {
                     wvWebBrowserView.goBack();
 
@@ -109,8 +107,6 @@ public class WebBrowserActivity
 
             @Override
             void onSwipeLeft() {
-                super.onSwipeLeft();
-
                 if (wvWebBrowserView.canGoForward()) {
                     wvWebBrowserView.goForward();
 
