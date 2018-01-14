@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
+// View:
 public class WebBrowserView
         extends WebView {
 

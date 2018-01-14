@@ -23,6 +23,7 @@ public class WebBrowserActivity
 
     private WebBrowserView wvWebBrowserView;
 
+    // Listener for swipes:
     private class WebViewSwipeListener
         implements View.OnTouchListener {
 
@@ -52,18 +53,22 @@ public class WebBrowserActivity
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 float distanceX = e2.getX() - e1.getX();
                 float distanceY = e2.getY() - e1.getY();
-                if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+
+                if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD
+                        && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     if (distanceX > 0)
                         onSwipeRight();
                     else
                         onSwipeLeft();
                     return true;
                 }
+
                 return false;
             }
         }
     }
 
+    // Go to a site:
     private void goToWebSite(String address) {
         if (!address.startsWith(HTTP_PROTOCOL)
                 || !address.startsWith(HTTPS_PROTOCOL)) {
@@ -90,6 +95,8 @@ public class WebBrowserActivity
         });
 
         wvWebBrowserView = findViewById(R.id.wv_web_site);
+
+        // Parameters:
         wvWebBrowserView.setWebViewClient(new WebBrowserViewClient(etWebSite));
         wvWebBrowserView.getSettings().setJavaScriptEnabled(true);
         wvWebBrowserView.setVerticalScrollBarEnabled(false);
@@ -98,6 +105,7 @@ public class WebBrowserActivity
 
             @Override
             void onSwipeRight() {
+                // If can go back on swipe:
                 if (wvWebBrowserView.canGoBack()) {
                     wvWebBrowserView.goBack();
 
@@ -107,6 +115,7 @@ public class WebBrowserActivity
 
             @Override
             void onSwipeLeft() {
+                // If can go forward on swipe:
                 if (wvWebBrowserView.canGoForward()) {
                     wvWebBrowserView.goForward();
 

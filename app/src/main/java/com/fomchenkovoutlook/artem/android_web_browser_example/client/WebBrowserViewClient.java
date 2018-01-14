@@ -4,6 +4,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 
+// Custom client:
 public class WebBrowserViewClient
         extends WebViewClient {
 
