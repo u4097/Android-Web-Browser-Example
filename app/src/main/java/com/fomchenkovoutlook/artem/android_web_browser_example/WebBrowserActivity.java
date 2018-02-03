@@ -1,12 +1,17 @@
 package com.fomchenkovoutlook.artem.android_web_browser_example;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -78,6 +83,18 @@ public class WebBrowserActivity
         wvWebBrowserView.loadUrl(address);
     }
 
+    private void back() {
+        wvWebBrowserView.goBack();
+
+        etWebSite.setText(wvWebBrowserView.getUrl());
+    }
+
+    private void forward() {
+        wvWebBrowserView.goForward();
+
+        etWebSite.setText(wvWebBrowserView.getUrl());
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +124,7 @@ public class WebBrowserActivity
             void onSwipeRight() {
                 // If can go back on swipe:
                 if (wvWebBrowserView.canGoBack()) {
-                    wvWebBrowserView.goBack();
-
-                    etWebSite.setText(wvWebBrowserView.getUrl());
+                    back();
                 }
             }
 
@@ -117,11 +132,42 @@ public class WebBrowserActivity
             void onSwipeLeft() {
                 // If can go forward on swipe:
                 if (wvWebBrowserView.canGoForward()) {
-                    wvWebBrowserView.goForward();
-
-                    etWebSite.setText(wvWebBrowserView.getUrl());
+                    forward();
                 }
             }
         });
+        wvWebBrowserView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent,
+                                        String contentDisposition, String mimetype,
+                                        long contentLength) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                request.allowScanningByMediaScanner();
+
+                request.setNotificationVisibility(
+                        DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+                // Filename:
+                String filename = url.substring(url.lastIndexOf('/') + 1);
+
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+                        "android-web-browser-example/" + filename);
+
+                DownloadManager downloadManager = (DownloadManager) getSystemService(
+                        DOWNLOAD_SERVICE);
+                downloadManager.enqueue(request);
+            }
+        });
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            back();
+
+            return true;
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 }
