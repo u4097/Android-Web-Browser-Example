@@ -15,22 +15,13 @@ import android.webkit.DownloadListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.fomchenkovoutlook.artem.android_web_browser_example.client.WebBrowserViewClient;
-import com.fomchenkovoutlook.artem.android_web_browser_example.view.WebBrowserView;
-
-import static com.fomchenkovoutlook.artem.android_web_browser_example.constants
-        .ConstantsInterface.ProtocolsInterface.*;
-
-public class WebBrowserActivity
-        extends AppCompatActivity {
+public class WebBrowserActivity extends AppCompatActivity {
 
     private EditText etWebSite;
-
     private WebBrowserView wvWebBrowserView;
 
-    // Listener for swipes:
-    private class WebViewSwipeListener
-        implements View.OnTouchListener {
+    // Swipes:
+    private class WebViewSwipeListener implements View.OnTouchListener {
 
         private final GestureDetector gestureDetector;
 
@@ -48,8 +39,7 @@ public class WebBrowserActivity
 
         void onSwipeLeft() {}
 
-        private final class GestureListener
-                extends GestureDetector.SimpleOnGestureListener {
+        private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
             private static final int SWIPE_DISTANCE_THRESHOLD = 100;
             private static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -58,16 +48,16 @@ public class WebBrowserActivity
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 float distanceX = e2.getX() - e1.getX();
                 float distanceY = e2.getY() - e1.getY();
-
-                if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD
+                if (Math.abs(distanceX) > Math.abs(distanceY)
+                        && Math.abs(distanceX) > SWIPE_DISTANCE_THRESHOLD
                         && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (distanceX > 0)
+                    if (distanceX > 0) {
                         onSwipeRight();
-                    else
+                    } else {
                         onSwipeLeft();
+                    }
                     return true;
                 }
-
                 return false;
             }
         }
@@ -75,23 +65,19 @@ public class WebBrowserActivity
 
     // Go to a site:
     private void goToWebSite(String address) {
-        if (!address.startsWith(HTTP_PROTOCOL)
-                || !address.startsWith(HTTPS_PROTOCOL)) {
-            address = HTTPS_PROTOCOL + address;
+        if (!address.startsWith(WebBrowserView.HTTP_PROTOCOL) || !address.startsWith(WebBrowserView.HTTPS_PROTOCOL)) {
+            address = WebBrowserView.HTTP_PROTOCOL + address;
         }
-
         wvWebBrowserView.loadUrl(address);
     }
 
     private void back() {
         wvWebBrowserView.goBack();
-
         etWebSite.setText(wvWebBrowserView.getUrl());
     }
 
     private void forward() {
         wvWebBrowserView.goForward();
-
         etWebSite.setText(wvWebBrowserView.getUrl());
     }
 
@@ -105,6 +91,7 @@ public class WebBrowserActivity
 
         ImageButton ibGoToWebSite = findViewById(R.id.ib_go_to_web_site);
         ibGoToWebSite.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 goToWebSite(etWebSite.getText().toString());
@@ -137,22 +124,18 @@ public class WebBrowserActivity
             }
         });
         wvWebBrowserView.setDownloadListener(new DownloadListener() {
+
             @Override
-            public void onDownloadStart(String url, String userAgent,
-                                        String contentDisposition, String mimetype,
-                                        long contentLength) {
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.allowScanningByMediaScanner();
-
                 request.setNotificationVisibility(
                         DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
                 // Filename:
                 String filename = url.substring(url.lastIndexOf('/') + 1);
-
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
                         "android-web-browser-example/" + filename);
-
                 DownloadManager downloadManager = (DownloadManager) getSystemService(
                         DOWNLOAD_SERVICE);
                 downloadManager.enqueue(request);
@@ -164,10 +147,8 @@ public class WebBrowserActivity
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             back();
-
             return true;
         }
-
         return super.dispatchKeyEvent(event);
     }
 }
