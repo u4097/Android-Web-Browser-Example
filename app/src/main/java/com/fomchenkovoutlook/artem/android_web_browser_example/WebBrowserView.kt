@@ -5,7 +5,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.webkit.WebView
 
-/** Clickable WebView */
+/**
+ * Clickable WebView
+ */
 class WebBrowserView: WebView {
 
     constructor(context: Context?) : super(context)

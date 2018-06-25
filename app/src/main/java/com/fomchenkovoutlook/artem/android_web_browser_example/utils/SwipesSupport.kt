@@ -7,9 +7,10 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-/** Class for add support left and right swipes
+/**
+ * Class for add support left and right swipes
  * @param context need to create MeasureDetector variable
- * */
+ */
 open class SwipesSupport(@NonNull private val context: Context): View.OnTouchListener {
 
     inner class GestureListener: GestureDetector.SimpleOnGestureListener() {
@@ -41,10 +42,14 @@ open class SwipesSupport(@NonNull private val context: Context): View.OnTouchLis
         gestureDetector = GestureDetector(context, GestureListener())
     }
 
-    /** On left swipe action */
+    /**
+     * On left swipe action
+     */
     internal open fun onSwipeLeft() {}
 
-    /** On right swipe action */
+    /**
+     * On right swipe action
+     */
     internal open fun onSwipeRight() {}
 
     @SuppressLint("ClickableViewAccessibility")

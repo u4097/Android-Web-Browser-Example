@@ -5,7 +5,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
 
-/** Set url in search field
+/**
+ * Set url in search field
  * @param etWebSite search field
  * */
 class WebBrowserViewClient(@NonNull private val etWebSite: EditText): WebViewClient() {

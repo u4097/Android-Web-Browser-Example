@@ -21,9 +21,10 @@ class WebBrowserActivity: AppCompatActivity() {
     private var etWebSite: EditText? = null
     private var wvWebBrowserView: WebBrowserView? = null
 
-    /** Load entered web address
+    /**
+     * Load entered web address
      * @param address entered web address
-     * */
+     */
     private fun loadWebSite(@NonNull address: String) {
         var loadingPage = address
         if (!address.startsWith(HTTP_PROTOCOL) || !address.startsWith(HTTPS_PROTOCOL)) {
@@ -32,13 +33,17 @@ class WebBrowserActivity: AppCompatActivity() {
         wvWebBrowserView!!.loadUrl(loadingPage)
     }
 
-    /** Back to previous web address */
+    /**
+     * Back to previous web address
+     */
     private fun back() {
         wvWebBrowserView!!.goBack()
         etWebSite!!.setText(wvWebBrowserView!!.url)
     }
 
-    /** Forwand to next web address */
+    /**
+     * Forwand to next web address
+     */
     private fun forward() {
         wvWebBrowserView!!.goForward()
         etWebSite!!.setText(wvWebBrowserView!!.url)
