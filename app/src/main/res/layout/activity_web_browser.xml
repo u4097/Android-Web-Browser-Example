@@ -1,43 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fomchenkovoutlook.artem.android_web_browser_example.WebBrowserActivity"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
     <com.fomchenkovoutlook.artem.android_web_browser_example.WebBrowserView
-        android:id="@+id/wv_web_site"
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
-    <LinearLayout
-        android:id="@+id/ll_action_items"
-        android:layout_width="match_parent"
+    <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_web_site"
+        <EditText android:id="@+id/web_link"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:imeOptions="actionDone"
-            android:inputType="textPersonName"
-            tools:ignore="LabelFor" />
+            android:inputType="textPersonName" />
 
-        <ImageButton
-            android:id="@+id/ib_go_to_web_site"
+        <ImageView android:id="@+id/open_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:contentDescription="@string/ib_go_to_web_site_description"
-            android:padding="8dp"
+            android:padding="@dimen/common_margin"
             app:srcCompat="@drawable/ic_go" />
+
     </LinearLayout>
+
 </LinearLayout>

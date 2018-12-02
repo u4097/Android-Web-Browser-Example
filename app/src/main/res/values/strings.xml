@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Android-Web-Browser-Example</string>
-    <string name="ib_go_to_web_site_description">Go to a web site</string>
+
 </resources>

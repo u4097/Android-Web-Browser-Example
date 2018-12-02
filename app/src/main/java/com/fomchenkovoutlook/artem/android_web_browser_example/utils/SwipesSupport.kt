@@ -42,14 +42,7 @@ open class SwipesSupport(@NonNull private val context: Context): View.OnTouchLis
         gestureDetector = GestureDetector(context, GestureListener())
     }
 
-    /**
-     * On left swipe action
-     */
     internal open fun onSwipeLeft() {}
-
-    /**
-     * On right swipe action
-     */
     internal open fun onSwipeRight() {}
 
     @SuppressLint("ClickableViewAccessibility")
